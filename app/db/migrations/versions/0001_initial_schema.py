@@ -54,9 +54,7 @@ def _tables():
         "item_topics": [
             sa.Column("item_id", sa.Integer, nullable=False),
             sa.Column("topic_id", sa.Integer, nullable=False),
-            sa.ForeignKeyConstraint(
-                ["item_id"], ["items.id"], name="fk_item_topics_item_id_items"
-            ),
+            sa.ForeignKeyConstraint(["item_id"], ["items.id"], name="fk_item_topics_item_id_items"),
             sa.ForeignKeyConstraint(
                 ["topic_id"], ["topics.id"], name="fk_item_topics_topic_id_topics"
             ),
