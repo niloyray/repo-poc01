@@ -58,3 +58,11 @@ To change the schema in a later story:
 Limit: the first migration adds only missing tables. It does not repair missing columns in a table that already exists.
 
 **Backup:** the database file is the only copy of the data and is not backed up. While the service runs, SQLite (WAL mode) also keeps `radar.db-wal` and `radar.db-shm` next to it; copy all three, or stop the service first.
+
+## Seed topics
+
+The watched topics live in `app/seed/topics.json`: a `topics` list of entries with `name`, `description`, `keywords` and `exclusion_keywords`. On start (after the migration) the service loads the file into the `topics` table. No manual step is needed.
+
+- **Insert-only:** a name already in the table is never changed, so edits made later are kept. Starting again adds nothing.
+- **Whole file or nothing:** a missing or blank name, an empty keyword list, a duplicate name or an unreadable file stops start-up with a message beginning `Invalid configuration: Seed file <path>:` that names the entry, and exit code 2. Nothing is written.
+- **Add a topic:** add an entry with a unique name and at least one keyword (`exclusion_keywords` may be empty), then restart.

@@ -1,0 +1,46 @@
+{
+  "topics": [
+    {
+      "name": "Knowledge graphs",
+      "description": "GraphRAG, knowledge graph construction with LLMs, ontologies, graph databases and graph reasoning.",
+      "keywords": ["knowledge graph", "GraphRAG", "ontology", "graph database", "graph reasoning", "knowledge graph construction", "Neo4j"],
+      "exclusion_keywords": ["social graph", "graph neural network benchmark"]
+    },
+    {
+      "name": "AI-native SDLC",
+      "description": "Coding agents, spec-driven development, agentic code review and testing, and software engineering benchmarks.",
+      "keywords": ["coding agent", "spec-driven development", "agentic code review", "agentic testing", "SWE-bench", "software engineering benchmark", "AI-native SDLC"],
+      "exclusion_keywords": ["no-code marketing"]
+    },
+    {
+      "name": "Business process modeling with agentic AI",
+      "description": "BPMN and LLMs, process mining, agentic process automation and multi-agent orchestration of business workflows.",
+      "keywords": ["BPMN", "process mining", "agentic process automation", "business process", "workflow orchestration", "multi-agent orchestration"],
+      "exclusion_keywords": ["six sigma certification"]
+    },
+    {
+      "name": "Problem solving",
+      "description": "Lean here means the Lean theorem prover (Lean 4 and mathlib), not Lean process improvement. Also automated theorem proving, OpenEvolve, AlphaEvolve-style evolutionary program search and reasoning methods.",
+      "keywords": ["Lean 4", "Lean theorem prover", "mathlib", "automated theorem proving", "OpenEvolve", "AlphaEvolve", "evolutionary program search", "reasoning"],
+      "exclusion_keywords": ["lean manufacturing", "lean startup", "six sigma", "lean six sigma", "lean management"]
+    },
+    {
+      "name": "Algorithms",
+      "description": "New algorithms and complexity results, algorithm discovery by AI, optimization and search methods.",
+      "keywords": ["new algorithm", "complexity result", "algorithm discovery", "optimization", "search algorithm", "approximation algorithm"],
+      "exclusion_keywords": ["recommendation algorithm", "social media algorithm"]
+    },
+    {
+      "name": "AI news of high importance",
+      "description": "Major model launches, significant papers, policy and safety events, and large industry moves.",
+      "keywords": ["model launch", "AI policy", "AI safety", "acquisition", "funding round", "regulation", "breakthrough"],
+      "exclusion_keywords": ["sponsored", "giveaway"]
+    },
+    {
+      "name": "New releases",
+      "description": "New versions of models, frameworks, SDKs and tools tracked by name.",
+      "keywords": ["release", "new version", "changelog", "SDK", "framework release", "model release"],
+      "exclusion_keywords": ["release party", "press release template"]
+    }
+  ]
+}

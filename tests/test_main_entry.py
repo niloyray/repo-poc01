@@ -26,6 +26,13 @@ def init_calls(monkeypatch):
     return calls
 
 
+@pytest.fixture(autouse=True)
+def seed_calls(monkeypatch):
+    calls = []
+    monkeypatch.setattr(entry, "load_seed", lambda url: calls.append(url))
+    return calls
+
+
 @pytest.fixture
 def run_calls(monkeypatch):
     calls = []
@@ -72,3 +79,24 @@ def test_database_error_exits_2_without_starting(monkeypatch, run_calls, capsys)
     assert exc.value.code == 2
     assert "DATABASE_URL: nope" in capsys.readouterr().err
     assert run_calls == []
+
+
+def test_bad_seed_exits_2_without_starting(monkeypatch, run_calls, capsys):
+    def boom(url):
+        raise entry.SeedError("Seed file x.json: entry 1 (no name): name is missing or blank")
+
+    monkeypatch.setattr(entry, "load_seed", boom)
+    with pytest.raises(SystemExit) as exc:
+        entry.main()
+    assert exc.value.code == 2
+    assert "Invalid configuration: Seed file x.json" in capsys.readouterr().err
+    assert run_calls == []
+
+
+def test_seed_loaded_after_database_before_server(monkeypatch):
+    order = []
+    monkeypatch.setattr(entry, "init_database", lambda url: order.append("db"))
+    monkeypatch.setattr(entry, "load_seed", lambda url: order.append("seed"))
+    monkeypatch.setattr(entry.uvicorn, "run", lambda *a, **kw: order.append("run"))
+    entry.main()
+    assert order == ["db", "seed", "run"]
