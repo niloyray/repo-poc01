@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv run pytest*)",
+      "Bash(uv run ruff*)",
+      "Bash(uvx ruff*)",
+      "Bash(uv sync*)",
+      "Bash(uv add*)",
+      "Bash(alembic *)",
+      "Bash(uv run alembic *)",
+      "Bash(docker compose config*)"
+    ],
+    "deny": [
+      "Bash(git push*)",
+      "Bash(gh pr merge*)",
+      "Bash(gh pr review --approve*)",
+      "Read(./.env)",
+      "Read(./**/.env)",
+      "Edit(./.github/**)",
+      "Write(./.github/**)",
+      "MultiEdit(./.github/**)",
+      "Edit(./.claude/**)",
+      "Write(./.claude/**)",
+      "MultiEdit(./.claude/**)",
+      "Edit(./.specify/**)",
+      "Write(./.specify/**)",
+      "MultiEdit(./.specify/**)",
+      "Edit(./CLAUDE.md)",
+      "Write(./CLAUDE.md)",
+      "MultiEdit(./CLAUDE.md)"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+# Thin caller written by `ains target add`. Build, GHCR, staging (G4) and production (G5) gates, Jira callbacks.
+name: release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  release:
+    uses: niloyray/ains-platform/.github/workflows/reusable-release.yml@main
+    with:
+      image-name: repo-poc01
+      jira-base-url: https://rayniloy.atlassian.net
+    secrets: inherit
