@@ -25,3 +25,19 @@ Check it:
 curl http://127.0.0.1:8000/health
 # {"status":"ok","version":"0.1.0"}
 ```
+
+## Configuration
+
+All settings are read from environment variables, and every one has a safe default, so the service runs with no configuration. `.env.example` lists each variable with its default and meaning. The file is not loaded automatically: copy it for reference and export the variables in your shell.
+
+```bash
+export PORT=8123
+uv run python -m app         # start the service using HOST and PORT
+```
+
+A bad value stops start-up with a message naming the variable, and exit code 2:
+
+```bash
+PORT=abc uv run python -m app
+# Invalid configuration: PORT: expected a whole number from 1 to 65535, got "abc"
+```
