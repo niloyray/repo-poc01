@@ -77,7 +77,9 @@ def _timezone(env: Mapping[str, str]) -> str:
     try:
         ZoneInfo(raw)
     except (ValueError, OSError, KeyError):  # ZoneInfoNotFoundError is a KeyError
-        raise _invalid("SCAN_TIMEZONE", "an IANA time zone name such as Asia/Kolkata", raw) from None
+        raise _invalid(
+            "SCAN_TIMEZONE", "an IANA time zone name such as Asia/Kolkata", raw
+        ) from None
     return raw
 
 

@@ -2,7 +2,15 @@ import pytest
 
 import app.__main__ as entry
 
-ENV_NAMES = ["DATABASE_URL", "HOST", "PORT", "SCAN_TIME", "SCAN_TIMEZONE", "LLM_MODEL", "GITHUB_TOKEN"]
+ENV_NAMES = [
+    "DATABASE_URL",
+    "HOST",
+    "PORT",
+    "SCAN_TIME",
+    "SCAN_TIMEZONE",
+    "LLM_MODEL",
+    "GITHUB_TOKEN",
+]
 
 
 @pytest.fixture(autouse=True)
