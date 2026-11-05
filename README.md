@@ -41,3 +41,20 @@ A bad value stops start-up with a message naming the variable, and exit code 2:
 PORT=abc uv run python -m app
 # Invalid configuration: PORT: expected a whole number from 1 to 65535, got "abc"
 ```
+
+## Database and migrations
+
+Everything is stored in one SQLite file, at the path in `DATABASE_URL` (default `sqlite:///data/radar.db`, relative to the folder you start the service from). On start the service creates the file and any missing folder, then brings it to the current schema. No manual step is needed, and starting on an up-to-date file changes no data. `data/` is ignored by git.
+
+If `DATABASE_URL` is not a SQLite file URL, or the path cannot be created or written, start-up stops with a message beginning `DATABASE_URL:` and exit code 2.
+
+To change the schema in a later story:
+
+1. Edit the tables in `app/db/schema.py`.
+2. Run `uv run python -m app.db revision "what changed"`. This writes a new script in `app/db/migrations/versions/`.
+3. Review the script. SQLite cannot alter every table in place, so check that it does not drop and re-create a table holding data.
+4. Apply it with `uv run python -m app.db upgrade`, or just restart the service.
+
+Limit: the first migration adds only missing tables. It does not repair missing columns in a table that already exists.
+
+**Backup:** the database file is the only copy of the data and is not backed up. While the service runs, SQLite (WAL mode) also keeps `radar.db-wal` and `radar.db-shm` next to it; copy all three, or stop the service first.
