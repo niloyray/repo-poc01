@@ -14,3 +14,6 @@ build/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Local database (REPOPOC01-12)
+data/

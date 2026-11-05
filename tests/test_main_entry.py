@@ -19,6 +19,13 @@ def clean_env(monkeypatch):
         monkeypatch.delenv(name, raising=False)
 
 
+@pytest.fixture(autouse=True)
+def init_calls(monkeypatch):
+    calls = []
+    monkeypatch.setattr(entry, "init_database", lambda url: calls.append(url))
+    return calls
+
+
 @pytest.fixture
 def run_calls(monkeypatch):
     calls = []
@@ -44,4 +51,24 @@ def test_bad_port_exits_with_message(monkeypatch, run_calls, capsys):
         entry.main()
     assert exc.value.code == 2
     assert "PORT" in capsys.readouterr().err
+    assert run_calls == []
+
+
+def test_database_initialised_before_server_starts(monkeypatch):
+    order = []
+    monkeypatch.setattr(entry, "init_database", lambda url: order.append("db"))
+    monkeypatch.setattr(entry.uvicorn, "run", lambda *a, **kw: order.append("run"))
+    entry.main()
+    assert order == ["db", "run"]
+
+
+def test_database_error_exits_2_without_starting(monkeypatch, run_calls, capsys):
+    def boom(url):
+        raise entry.DatabaseConfigError("DATABASE_URL: nope")
+
+    monkeypatch.setattr(entry, "init_database", boom)
+    with pytest.raises(SystemExit) as exc:
+        entry.main()
+    assert exc.value.code == 2
+    assert "DATABASE_URL: nope" in capsys.readouterr().err
     assert run_calls == []

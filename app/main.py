@@ -1,9 +1,21 @@
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 
 from app import __version__
+from app.db import init_database
+from app.settings import get_settings
 
-app = FastAPI(title="AI Radar", version=__version__)
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
+    init_database(get_settings().database_url)
+    yield
+
+
+app = FastAPI(title="AI Radar", version=__version__, lifespan=lifespan)
 
 
 class HealthResponse(BaseModel):
