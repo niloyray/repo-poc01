@@ -6,12 +6,15 @@ from pydantic import BaseModel
 
 from app import __version__
 from app.db import init_database
+from app.seed import load_seed
 from app.settings import get_settings
 
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
-    init_database(get_settings().database_url)
+    database_url = get_settings().database_url
+    init_database(database_url)
+    load_seed(database_url)
     yield
 
 

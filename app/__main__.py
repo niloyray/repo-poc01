@@ -3,6 +3,7 @@ import sys
 import uvicorn
 
 from app.db import DatabaseConfigError, init_database
+from app.seed import SeedError, load_seed
 from app.settings import SettingsError, load_settings
 
 
@@ -10,7 +11,8 @@ def main() -> None:
     try:
         settings = load_settings()
         init_database(settings.database_url)
-    except (SettingsError, DatabaseConfigError) as exc:
+        load_seed(settings.database_url)
+    except (SettingsError, DatabaseConfigError, SeedError) as exc:
         print(f"Invalid configuration: {exc}", file=sys.stderr)
         sys.exit(2)
     uvicorn.run("app.main:app", host=settings.host, port=settings.port)

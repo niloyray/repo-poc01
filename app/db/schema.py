@@ -26,6 +26,9 @@ topics = sa.Table(
     metadata,
     sa.Column("id", sa.Integer, primary_key=True),
     sa.Column("name", sa.Text, nullable=False, unique=True),
+    sa.Column("description", sa.Text, nullable=False, server_default=""),
+    sa.Column("keywords", sa.JSON, nullable=False, server_default="[]"),
+    sa.Column("exclusion_keywords", sa.JSON, nullable=False, server_default="[]"),
 )
 
 items = sa.Table(
